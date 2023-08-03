@@ -1,6 +1,9 @@
-import TypeBadge from "./TypeBadge";
+import TypeBadgeList from "./TybeBadgeList";
+
+import { useEffect, useState } from "react";
 
 const PokeCard = ({ pokemon, colors }) => {
+  const [types, setTypes] = useState([])
 
   //Gives gradient if there are more than two types and a solid color for just one. 
   const backgroundColor = colors.length === 1 
@@ -12,6 +15,18 @@ const PokeCard = ({ pokemon, colors }) => {
       "backgroundColor": colors[0],
       "background": `linear-gradient(45deg, ${colors[0]} 0%, ${colors[1]} 100%)`
     }
+  useEffect(() => {
+    const typeKV = []
+    pokemon.types.forEach((type, index) => {
+      const obj = {type: "", color: ""}
+      obj.type = type.type.name
+      obj.color = colors[index]
+      typeKV.push(obj)
+    })
+    setTypes(typeKV)
+  }, [])
+
+
   return (
     <div className="box" style={backgroundColor}>
       <div className="columns">
@@ -19,16 +34,13 @@ const PokeCard = ({ pokemon, colors }) => {
           <h2 className="is-size-5 is-capitalized has-text-weight-semibold has-text-light">
             {pokemon.name}
           </h2>
-          <TypeBadge type={pokemon.types[0].type.name} color={colors[0]}/>
-          <TypeBadge type="Grass" />
+          <TypeBadgeList types={types} />
         </div>
-        <div> 
-      
+        <div>   
         </div>
       </div>
     </div>
-  );
-  
+  ); 
 };
 
 export default PokeCard;

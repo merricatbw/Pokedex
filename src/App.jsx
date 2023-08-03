@@ -30,7 +30,7 @@ const App = () => {
 
   //useEffect on page load to fetch gengar and set test pokemon to data
   useEffect(() => {
-    pokemonService.getPokemon("pikachu")
+    pokemonService.getPokemon(1)
     .then(res => setTestPokemon(res))
   }, [])
 
