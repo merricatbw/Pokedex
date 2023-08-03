@@ -3,9 +3,9 @@ import TypeBadge from "./TypeBadge"
 const TypeBadgeList = ({types}) => {
   console.log(types)
   return (
-    <div>
+    <div className="column">
       {types.map((type, index) => {
-        console.log(type.key)
+        console.log(type.grass)
         return <TypeBadge key={index} type={type.type} color={type.color} />
       })}
     </div>

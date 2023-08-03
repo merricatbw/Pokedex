@@ -1,4 +1,5 @@
 import TypeBadgeList from "./TybeBadgeList";
+import PokePic from "./PokePic";
 
 import { useEffect, useState } from "react";
 
@@ -26,7 +27,6 @@ const PokeCard = ({ pokemon, colors }) => {
     setTypes(typeKV)
   }, [])
 
-
   return (
     <div className="box" style={backgroundColor}>
       <div className="columns">
@@ -36,7 +36,8 @@ const PokeCard = ({ pokemon, colors }) => {
           </h2>
           <TypeBadgeList types={types} />
         </div>
-        <div>   
+        <div>
+          <PokePic url={pokemon.sprites.other["official-artwork"].front_default} alt={pokemon.name} />
         </div>
       </div>
     </div>
