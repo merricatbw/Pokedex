@@ -28,9 +28,9 @@ const App = () => {
     "???": "#67A090"
   }
 
-  //useEffect on page load to fetch bulbasaur and set test pokemon to data
+  //useEffect on page load to fetch gengar and set test pokemon to data
   useEffect(() => {
-    pokemonService.getPokemon("charizard")
+    pokemonService.getPokemon("pikachu")
     .then(res => setTestPokemon(res))
   }, [])
 
