@@ -1,10 +1,15 @@
 import {useEffect, useState} from 'react'
+
 import PokeCard from "./components/PokeCard";
+import DebugSearch from './components/DebugSearch';
+
 import pokemonService from "./services/pokemon"
+
 
 const App = () => {
   //will use for testing purposes
   const [testPokemon, setTestPokemon] = useState(null)
+  const [debugSearchName, setDebugSearchName] = useState("bulbasaur")
 
   const colorMap = {
     "normal": "#A8A879",
@@ -30,9 +35,21 @@ const App = () => {
 
   //useEffect on page load to fetch gengar and set test pokemon to data
   useEffect(() => {
-    pokemonService.getPokemon(6)
+    pokemonService.getPokemon(1)
     .then(res => setTestPokemon(res))
   }, [])
+
+  const debugSearchHandler = e => {
+    e.preventDefault()
+    pokemonService.getPokemon(debugSearchName)
+      .then(res => setTestPokemon(res))
+    
+  }
+
+  const handleDebugInput = e => {
+    e.preventDefault()
+    setDebugSearchName(e.target.value)
+  }
 
   return (
     <div className="container">
@@ -45,6 +62,7 @@ const App = () => {
           }
         </div>      
       </div>
+      <DebugSearch handleSubmit={debugSearchHandler} pokemon={debugSearchName} handleInput={handleDebugInput}/>
     </div>
   )
 }

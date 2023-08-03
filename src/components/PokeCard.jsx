@@ -22,10 +22,11 @@ const PokeCard = ({ pokemon, colors }) => {
       const obj = {type: "", color: ""}
       obj.type = type.type.name
       obj.color = colors[index]
+      console.log(obj)
       typeKV.push(obj)
     })
     setTypes(typeKV)
-  }, [])
+  }, [pokemon])
 
   return (
     <div className="box" style={backgroundColor}>
