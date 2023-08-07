@@ -7,4 +7,10 @@ const getPokemon = (id) => {
     return request.then(res => res.data)
 }
 
-export default {getPokemon}
+const getPokemons = (limit, offset) => {
+  const request = axios.get(`${baseUrl}pokemon/`, {params: {offset: offset, limit: limit}})
+  return request.then(res => res.data)
+}
+
+
+export default {getPokemon, getPokemons}

@@ -1,15 +1,11 @@
 import {useEffect, useState} from 'react'
 
-import PokeCard from "./components/PokeCard";
-import DebugSearch from './components/DebugSearch';
-
 import pokemonService from "./services/pokemon"
-
+import PokeCardList from './components/PokeCardList';
 
 const App = () => {
   //will use for testing purposes
-  const [testPokemon, setTestPokemon] = useState(null)
-  const [debugSearchName, setDebugSearchName] = useState("bulbasaur")
+  const [pokemons, setPokemons] = useState([])
 
   const colorMap = {
     "normal": "#A8A879",
@@ -33,36 +29,27 @@ const App = () => {
     "???": "#67A090"
   }
 
-  //useEffect on page load to fetch gengar and set test pokemon to data
+  //generate a list of pokemon names to be rendered
   useEffect(() => {
-    pokemonService.getPokemon(1)
-    .then(res => setTestPokemon(res))
+    const current = []
+    pokemonService.getPokemons(20, 0)
+      .then(data => {
+        data.results.forEach(pokemon => {   
+          pokemonService.getPokemon(pokemon.name)
+            .then(res => {
+              current.push(res)
+            })
+        })
+      })
+    console.log(current)
   }, [])
-
-  const debugSearchHandler = e => {
-    e.preventDefault()
-    pokemonService.getPokemon(debugSearchName)
-      .then(res => setTestPokemon(res))
-    
-  }
-
-  const handleDebugInput = e => {
-    e.preventDefault()
-    setDebugSearchName(e.target.value)
-  }
 
   return (
     <div className="container">
       <h1 className="is-size-1">Pokedex</h1>
-      <div className="columns is-mobile mx-2">
-        <div className="column is-one-quarter-desktop is-half-mobile is-one-third-table">
-          {testPokemon !== null  
-            ? <PokeCard pokemon={testPokemon} colors={testPokemon.types.map(type => colorMap[type.type.name])}/>
-            : <div></div>
-          }
-        </div>      
+      <div className="is-flex is-flex-wrap-wrap">
+        <PokeCardList pokemons={pokemons} colorMap={colorMap} />
       </div>
-      <DebugSearch handleSubmit={debugSearchHandler} pokemon={debugSearchName} handleInput={handleDebugInput}/>
     </div>
   )
 }
